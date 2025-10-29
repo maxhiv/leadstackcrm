@@ -1,0 +1,75 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Leadstack CRM — v20-AI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>.drawer{transition:transform .25s ease}.drawer.closed{transform:translateX(100%)}</style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <div class="min-h-screen flex">
+    <aside class="w-64 bg-white border-r border-slate-200 p-4 hidden md:block">
+      <div class="flex items-center gap-2 mb-6"><span class="text-indigo-600 font-black text-xl">Leadstack</span><span class="text-xs rounded-full bg-slate-100 px-2 py-0.5">CRM</span></div>
+      <nav class="space-y-1 text-sm">
+        <a class="block px-2 py-2 rounded hover:bg-slate-100 font-medium" href="/">Leads</a>
+        <a class="block px-2 py-2 rounded hover:bg-slate-100" href="/activities.html">Activities</a>
+        <a class="block px-2 py-2 rounded hover:bg-slate-100" href="/health" target="_blank">Health</a>
+      </nav>
+    </aside>
+    <main class="flex-1 p-4 md:p-8">
+      <div class="flex items-center justify-between mb-4">
+        <h1 class="text-xl md:text-2xl font-semibold">Leads</h1>
+        <button class="px-3 py-1.5 rounded bg-slate-900 text-white text-sm" onclick="loadLeads()">Refresh</button>
+      </div>
+      <div class="overflow-auto bg-white border border-slate-200 rounded">
+        <table class="w-full text-sm">
+          <thead class="bg-slate-50"><tr class="text-left">
+            <th class="px-3 py-2">#</th><th class="px-3 py-2">Name</th><th class="px-3 py-2">City</th><th class="px-3 py-2">Category</th>
+            <th class="px-3 py-2">LDE</th><th class="px-3 py-2">Priority</th><th class="px-3 py-2">AI Score</th><th class="px-3 py-2"></th>
+          </tr></thead>
+          <tbody id="leadRows"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <section id="drawer" class="drawer closed fixed right-0 top-0 h-full w-full md:w-[560px] bg-white border-l border-slate-200 shadow-2xl p-4 flex flex-col z-50">
+      <div class="flex items-center justify-between">
+        <div>
+          <div id="leadHeader" class="text-sm font-semibold">Lead</div>
+          <div id="leadTags" class="text-xs text-slate-500"></div>
+        </div>
+        <a id="callBtn" class="px-2 py-1 rounded bg-emerald-600 text-white text-xs" href="#">Call</a>
+      </div>
+
+      <div class="mt-3 grid grid-cols-3 gap-2 text-xs">
+        <button class="px-2 py-1 rounded bg-slate-100" onclick="aiPersonalize()">AI Personalize</button>
+        <button class="px-2 py-1 rounded bg-slate-100" onclick="aiSubjectLines()">AI Subject Lines</button>
+        <button class="px-2 py-1 rounded bg-slate-100" onclick="aiOpeners()">AI Openers</button>
+      </div>
+
+      <div class="mt-3 text-xs text-slate-600 font-medium">Activity Feed</div>
+      <div id="messages" class="mt-1 flex-1 overflow-auto border border-slate-100 rounded p-2 bg-slate-50"></div>
+
+      <div class="mt-2">
+        <div class="flex gap-2 mb-2">
+          <select id="channel" class="border border-slate-200 rounded px-2 py-1 text-sm">
+            <option value="Email">Email</option>
+            <option value="SMS">SMS</option>
+          </select>
+          <input id="toField" class="flex-1 border border-slate-200 rounded px-2 py-1 text-sm" placeholder="To"/>
+        </div>
+        <input id="subjectField" class="w-full border border-slate-200 rounded px-2 py-1 text-sm mb-2" placeholder="Subject (email only)"/>
+        <textarea id="composer" class="w-full border border-slate-200 rounded px-2 py-2 text-sm" rows="4" placeholder="Write a message..."></textarea>
+        <div class="flex justify-between items-center mt-2">
+          <div class="text-xs text-slate-500" id="fromHint"></div>
+          <button class="px-3 py-1.5 rounded bg-indigo-600 text-white text-sm" onclick="sendMessage()">Send</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>

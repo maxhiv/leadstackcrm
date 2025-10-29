@@ -1,0 +1,3 @@
+run = "npm start"
+entrypoint = "src/server.js"
+hidden = [".env"]
